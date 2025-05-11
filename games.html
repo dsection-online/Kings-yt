@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Games</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #121212;
+      color: white;
+    }
+
+    a {
+      color: white;
+      text-decoration: none;
+    }
+
+    .topbar {
+      background-color: #1e1e1e;
+      padding: 15px;
+      display: flex;
+      align-items: center;
+    }
+
+    .topbar a {
+      font-size: 18px;
+      padding: 8px 16px;
+      border-radius: 5px;
+    }
+
+    .topbar a:hover {
+      background-color: #333;
+    }
+
+    h1 {
+      text-align: center;
+      margin: 20px 0;
+    }
+
+    .grid-gallery {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      padding: 20px;
+    }
+
+    .grid-item {
+      background-color: #1e1e1e;
+      padding: 10px;
+      border-radius: 10px;
+      text-align: center;
+      border: 2px solid white;
+      transition: transform 0.2s;
+    }
+
+    .grid-item:hover {
+      transform: scale(1.05);
+    }
+
+    .grid-item img {
+      width: 100%;
+      aspect-ratio: 1/1;
+      object-fit: cover;
+      border-radius: 10px;
+    }
+
+    .grid-item p {
+      margin-top: 8px;
+      font-size: 14px;
+      color: white;
+    }
+
+    .create-btn {
+      display: block;
+      width: fit-content;
+      margin: 30px auto;
+      padding: 10px 20px;
+      background-color: #333;
+      border-radius: 5px;
+      font-size: 16px;
+    }
+
+    .create-btn:hover {
+      background-color: #555;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="topbar">
+    <a href="dashboard.html">Home</a>
+  </div>
+
+  <h1>Games</h1>
+
+  <div class="grid-gallery">
+    <a href="https://dsection-online.github.io/Hand-cricket-game/" target="_blank" class="grid-item">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQGnQgH_D0ZNGagg7dGnoFJwN1ts3LTFzExLw&s" alt="Game 1">
+      <p>handcricket</p>
+    </a>
+    <a href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQI2QLmUodp1AKrv-UEX4Se_GMYBXLrh7IG9Q&s" target="_blank" class="grid-item">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQI2QLmUodp1AKrv-UEX4Se_GMYBXLrh7IG9Q&s" alt="Game 2">
+      <p>adimanava</p>
+    </a>
+    <a href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQI2QLmUodp1AKrv-UEX4Se_GMYBXLrh7IG9Q&s" target="_blank" class="grid-item">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQI2QLmUodp1AKrv-UEX4Se_GMYBXLrh7IG9Q&s" alt="Game 3">
+      <p>adimanava 2</p>
+    </a>
+    <a href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQI2QLmUodp1AKrv-UEX4Se_GMYBXLrh7IG9Q&s" target="_blank" class="grid-item">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQI2QLmUodp1AKrv-UEX4Se_GMYBXLrh7IG9Q&s" alt="Game 4">
+      <p>beat the leadi</p>
+    </a>
+    <a href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQI2QLmUodp1AKrv-UEX4Se_GMYBXLrh7IG9Q&s" target="_blank" class="grid-item">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQI2QLmUodp1AKrv-UEX4Se_GMYBXLrh7IG9Q&s" alt="Game 5">
+      <p>destroy the school</p>
+    </a>
+    <a href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQI2QLmUodp1AKrv-UEX4Se_GMYBXLrh7IG9Q&s" target="_blank" class="grid-item">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQI2QLmUodp1AKrv-UEX4Se_GMYBXLrh7IG9Q&s" alt="Game 6">
+      <p>Scratch Game 6</p>
+    </a>
+  </div>
+
+  <a class="create-btn" href="gamecreate.html">Create Game</a>
+
+</body>
+</html>

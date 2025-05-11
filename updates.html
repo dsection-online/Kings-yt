@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>News and Updates</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #121212;
+      color: white;
+    }
+
+    .topbar {
+      background-color: #1e1e1e;
+      padding: 15px;
+      text-align: center;
+      font-size: 24px;
+      font-weight: bold;
+      border-bottom: 2px solid #333;
+    }
+
+    .news-container {
+      display: grid;
+      grid-template-areas:
+        "main news1 news2 news3"
+        "main news4 news5 news6";
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 20px;
+      padding: 20px;
+    }
+
+    .news-box {
+      background-color: #1e1e1e;
+      border: 2px solid white;
+      border-radius: 10px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .news-box img {
+      width: 100%;
+      aspect-ratio: 1/1;
+      object-fit: cover;
+    }
+
+    .news-text {
+      padding: 10px;
+      font-size: 14px;
+    }
+
+    .main-news {
+      grid-area: main;
+      height: 100%;
+    }
+
+    .news1 { grid-area: news1; }
+    .news2 { grid-area: news2; }
+    .news3 { grid-area: news3; }
+    .news4 { grid-area: news4; }
+    .news5 { grid-area: news5; }
+    .news6 { grid-area: news6; }
+
+    @media (max-width: 768px) {
+      .news-container {
+        grid-template-areas:
+          "main"
+          "news1"
+          "news2"
+          "news3"
+          "news4"
+          "news5"
+          "news6";
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="topbar">News and Updates</div>
+
+  <div class="news-container">
+    <div class="news-box main-news" id="mainNews">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQkHqYPblthS5P6sL7yQvsmUGf-zxMqz1xk0g&s" id="mainImage" alt="Main News">
+      <div class="news-text" id="mainText">ADIMANAVA:the game adimanava is being remaked and created many times  through out the year if anyone wants to help me make this app i will be happy to make it with them says charvik</div>
+    </div>
+    <div class="news-box news1" id="news1">
+      <img src="https://ik.imagekit.io/xofjrwzzw/Screenshot_2025-05-11-09-43-58-02_6012fa4d4ddec268fc5c7112cbb265e7.jpg?updatedAt=1746945875924" id="news1Image" alt="News 1">
+      <div class="news-text" id="news1Text">subbaya is getting more and more aggressive every day both in clas and in whatsapp he should be quiet orelse there would be consequences</div>
+    </div>
+    <div class="news-box news2" id="news2">
+      <img src="https://ik.imagekit.io/xofjrwzzw/Screenshot_2025-05-11-08-36-59-24_6012fa4d4ddec268fc5c7112cbb265e7.jpg?updatedAt=1746941838327" id="news2Image" alt="News 2">
+      <div class="news-text" id="news2Text">praneeth says you baya not me</div>
+    </div>
+    <div class="news-box news3" id="news3">
+      <img src="https://i.guim.co.uk/img/media/b218e5d106f52f500ed2b6ec44bf3dc3579f9062/221_0_3888_3112/master/3888.jpg?width=1300&dpr=2&s=none&crop=none" id="news3Image" alt="News 3">
+      <div class="news-text" id="news3Text">cricket gets suspended because of papistan kings yt group is angry at papistatan for making cricket suspended,hitler says that he will destroy papistan for what it did</div>
+    </div>
+    <div class="news-box news4" id="news4">
+      <img src="https://ik.imagekit.io/xofjrwzzw/7kxW.gif?updatedAt=1746946411250" id="news4Image" alt="News 4">
+      <div class="news-text" id="news4Text">guys hitler is angry everyone should hide immedietely!!!!!!!</div>
+    </div>
+    <div class="news-box news5" id="news5">
+      <img src="https://images.firstpost.com/uploads/2025/05/pakistan-cricketers-2025-05-8c6ebc6c773c3e7dd949154a9f72f0f5-1200x675.jpg?im=FitAndFill=(596,336)" id="news5Image" alt="News 5">
+      <div class="news-text" id="news5Text">Pakistan cricketers and YouTubers hurting 'financially' after India block their channels: 'Ban is going to hit hard'</div>
+    </div>
+    <div class="news-box news6" id="news6">
+      <img src="https://cf-img-a-in.tosshub.com/lingo/stak/images/story/202505/68186910607e5-ricky-ponting--shashank-singh--josh-inglis-053018428-16x9.jpg?size=1600:900" id="news6Image" alt="News 6">
+      <div class="news-text" id="news6Text">It was actually a move that...': Punjab Kings head coach Ricky Ponting reveals it wasn't his idea to bat Josh Inglis at no.3 and Shreyas Iyer at no.4</div>
+    </div>
+  </div>
+
+  <script>
+    // Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyD1rUAnHccVVinN5bL812PKPiycFJGTmxE",
+      authDomain: "godzilla-286a4.firebaseapp.com",
+      projectId: "godzilla-286a4",
+      storageBucket: "godzilla-286a4.appspot.com",
+      messagingSenderId: "467311590292",
+      appId: "1:467311590292:web:9c6a37f585357de8db6d81"
+    };
+
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+
+    // Load updates from Firestore
+    function loadUpdates() {
+      db.collection("newsUpdates").get().then(snapshot => {
+        snapshot.forEach(doc => {
+          const data = doc.data();
+
+          // Main news update
+          if (data.type === "main") {
+            document.getElementById("mainImage").src = data.imageUrl;
+            document.getElementById("mainText").innerText = data.text;
+          }
+
+          // Other updates
+          if (data.type === "news1") {
+            document.getElementById("news1Image").src = data.imageUrl;
+            document.getElementById("news1Text").innerText = data.text;
+          }
+          if (data.type === "news2") {
+            document.getElementById("news2Image").src = data.imageUrl;
+            document.getElementById("news2Text").innerText = data.text;
+          }
+          if (data.type === "news3") {
+            document.getElementById("news3Image").src = data.imageUrl;
+            document.getElementById("news3Text").innerText = data.text;
+          }
+          if (data.type === "news4") {
+            document.getElementById("news4Image").src = data.imageUrl;
+            document.getElementById("news4Text").innerText = data.text;
+          }
+          if (data.type === "news5") {
+            document.getElementById("news5Image").src = data.imageUrl;
+            document.getElementById("news5Text").innerText = data.text;
+          }
+          if (data.type === "news6") {
+            document.getElementById("news6Image").src = data.imageUrl;
+            document.getElementById("news6Text").innerText = data.text;
+          }
+        });
+      });
+    }
+
+    // Call the load function
+    loadUpdates();
+  </script>
+</body>
+</html>

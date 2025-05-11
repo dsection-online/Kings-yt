@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-storage-compat.js"></script>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #121212;
+      color: white;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-around;
+      background-color: #1e1e1e;
+      padding: 15px;
+      font-size: 18px;
+    }
+
+    .topbar a {
+      color: white;
+      text-decoration: none;
+      padding: 5px 15px;
+      border-radius: 5px;
+    }
+
+    .topbar a:hover {
+      background-color: #333;
+    }
+
+    .container {
+      display: flex;
+      padding: 20px;
+    }
+
+    .left-box {
+      flex: 2;
+      background-color: #1e1e1e;
+      padding: 20px;
+      border-radius: 10px;
+      margin-right: 20px;
+    }
+
+    .left-box h2 {
+      margin-top: 0;
+    }
+
+    .memes-list {
+      margin-top: 15px;
+    }
+
+    .meme-item {
+      margin-bottom: 10px;
+    }
+
+    .meme-item img {
+      max-width: 100%;
+      border-radius: 10px;
+      border: 2px solid white;
+    }
+
+    .right-box {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .profile-pic {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid #fff;
+      margin-bottom: 10px;
+    }
+
+    .name-input {
+      margin-top: 10px;
+      padding: 8px;
+      width: 80%;
+      border: none;
+      border-radius: 5px;
+    }
+
+    .grid-gallery {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 15px;
+      margin: 30px 20px;
+    }
+
+    .grid-item {
+      text-align: center;
+    }
+
+    .grid-item img {
+      width: 100%;
+      aspect-ratio: 1/1;
+      object-fit: cover;
+      border-radius: 10px;
+      border: 2px solid white;
+    }
+
+    .grid-item p {
+      margin-top: 8px;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <div class="topbar">
+    <a href="share.html">Share</a>
+    <a href="#">Memes</a>
+    <a href="game.html">Games</a>
+    <a href="#">Edits</a>
+  </div>
+
+  <div class="container">
+    <div class="left-box">
+      <h2>Latest Memes</h2>
+      <div class="memes-list" id="memesList">
+        <!-- Memes will be loaded here -->
+      </div>
+    </div>
+
+    <div class="right-box">
+      <img src="default-profile.png" id="profilePic" class="profile-pic" alt="Profile Picture">
+      <input type="file" id="uploadPic" accept="image/*" />
+      <input type="text" id="username" class="name-input" placeholder="Enter your name">
+    </div>
+  </div>
+
+  <div class="grid-gallery">
+    <!-- Example images — you can replace the URLs and text -->
+    <div class="grid-item">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/e/e3/Hitler_speech.gif" alt="Image 1">
+      <p>hithesh's anger</p>
+    </div>
+    <div class="grid-item">
+      <img src="https://media0.giphy.com/media/icUkjhOF3hrtr6fHPL/giphy.gif" alt="Image 2">
+      <p>da brownie queen</p>
+    </div>
+    <div class="grid-item">
+      <img src="https://ik.imagekit.io/xofjrwzzw/Screenshot_2025-05-11-08-16-04-98_6012fa4d4ddec268fc5c7112cbb265e7.jpg?updatedAt=1746940588675" alt="Image 3">
+      <p>hitler gonna destroy group</p>
+    </div>
+    <div class="grid-item">
+      <img src="https://i.pinimg.com/originals/c0/30/03/c03003776e9cb3e20ba7bd3171700507.gif" alt="Image 4">
+      <p>middle monkey's overaction</p>
+    </div>
+    <div class="grid-item">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRNwWDoPTOcHPbPRa0hT_GRoOmlImAy9sFPVg&s" alt="Image 5">
+      <p>sub's badwords</p>
+    </div>
+    <div class="grid-item">
+      <img src="https://ik.imagekit.io/xofjrwzzw/Screenshot_2025-05-11-08-36-59-24_6012fa4d4ddec268fc5c7112cbb265e7.jpg?updatedAt=1746941838327" alt="Image 6">
+      <p>RIP PRANEETH</p>
+    </div>
+  </div>
+
+  <script>
+    // TODO: Replace with your Firebase config
+    const firebaseConfig = {
+      apiKey: "YOUR_API_KEY",
+      authDomain: "YOUR_AUTH_DOMAIN",
+      projectId: "YOUR_PROJECT_ID",
+      storageBucket: "YOUR_BUCKET",
+      messagingSenderId: "YOUR_SENDER_ID",
+      appId: "YOUR_APP_ID"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+    const storage = firebase.storage();
+
+    // Load memes from Firestore
+    function loadMemes() {
+      const memesList = document.getElementById("memesList");
+      db.collection("memes").orderBy("timestamp", "desc").limit(5).get().then(snapshot => {
+        snapshot.forEach(doc => {
+          const data = doc.data();
+          const memeDiv = document.createElement("div");
+          memeDiv.className = "meme-item";
+          memeDiv.innerHTML = `<img src="${data.image}" alt="Meme">`;
+          memesList.appendChild(memeDiv);
+        });
+      });
+    }
+
+    loadMemes();
+
+    // Upload profile picture
+    document.getElementById("uploadPic").addEventListener("change", function (e) {
+      const file = e.target.files[0];
+      const reader = new FileReader();
+
+      // Preview immediately
+      reader.onload = function (event) {
+        document.getElementById("profilePic").src = event.target.result;
+      };
+      reader.readAsDataURL(file);
+
+      // Upload to Firebase
+      const ref = storage.ref("profilePics/" + file.name);
+      ref.put(file).then(snapshot => snapshot.ref.getDownloadURL()).then(url => {
+        console.log("Uploaded to Firebase:", url);
+      });
+    });
+  </script>
+</body>
+</html>

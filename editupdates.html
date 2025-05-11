@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Edit News and Updates</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #121212;
+      color: white;
+      padding: 20px;
+    }
+
+    .topbar {
+      background-color: #1e1e1e;
+      padding: 15px;
+      text-align: center;
+      font-size: 24px;
+      font-weight: bold;
+      border-bottom: 2px solid #333;
+    }
+
+    .form-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      padding: 20px;
+    }
+
+    .form-container input, .form-container textarea {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      background-color: #1e1e1e;
+      color: white;
+      border: 1px solid #444;
+      border-radius: 5px;
+    }
+
+    .form-container label {
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+
+    .submit-btn {
+      padding: 10px 20px;
+      background-color: #333;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .submit-btn:hover {
+      background-color: #444;
+    }
+  </style>
+</head>
+<body>
+  <div class="topbar">Edit News and Updates</div>
+
+  <div class="form-container">
+    <!-- Main News Section -->
+    <div>
+      <label for="mainImage">Main News Image URL:</label>
+      <input type="text" id="mainImage" placeholder="Enter Main News Image URL">
+
+      <label for="mainText">Main News Text:</label>
+      <textarea id="mainText" rows="4" placeholder="Enter Main News Text"></textarea>
+    </div>
+
+    <!-- Other News Sections -->
+    <div>
+      <label for="news1Image">News 1 Image URL:</label>
+      <input type="text" id="news1Image" placeholder="Enter News 1 Image URL">
+
+      <label for="news1Text">News 1 Text:</label>
+      <textarea id="news1Text" rows="4" placeholder="Enter News 1 Text"></textarea>
+
+      <label for="news2Image">News 2 Image URL:</label>
+      <input type="text" id="news2Image" placeholder="Enter News 2 Image URL">
+
+      <label for="news2Text">News 2 Text:</label>
+      <textarea id="news2Text" rows="4" placeholder="Enter News 2 Text"></textarea>
+
+      <label for="news3Image">News 3 Image URL:</label>
+      <input type="text" id="news3Image" placeholder="Enter News 3 Image URL">
+
+      <label for="news3Text">News 3 Text:</label>
+      <textarea id="news3Text" rows="4" placeholder="Enter News 3 Text"></textarea>
+    </div>
+
+    <!-- Other News Sections (continued) -->
+    <div>
+      <label for="news4Image">News 4 Image URL:</label>
+      <input type="text" id="news4Image" placeholder="Enter News 4 Image URL">
+
+      <label for="news4Text">News 4 Text:</label>
+      <textarea id="news4Text" rows="4" placeholder="Enter News 4 Text"></textarea>
+
+      <label for="news5Image">News 5 Image URL:</label>
+      <input type="text" id="news5Image" placeholder="Enter News 5 Image URL">
+
+      <label for="news5Text">News 5 Text:</label>
+      <textarea id="news5Text" rows="4" placeholder="Enter News 5 Text"></textarea>
+
+      <label for="news6Image">News 6 Image URL:</label>
+      <input type="text" id="news6Image" placeholder="Enter News 6 Image URL">
+
+      <label for="news6Text">News 6 Text:</label>
+      <textarea id="news6Text" rows="4" placeholder="Enter News 6 Text"></textarea>
+    </div>
+
+    <div style="grid-column: span 2; text-align: center;">
+      <button class="submit-btn" onclick="saveUpdates()">Save Updates</button>
+    </div>
+  </div>
+
+  <script>
+    // Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyD1rUAnHccVVinN5bL812PKPiycFJGTmxE",
+      authDomain: "godzilla-286a4.firebaseapp.com",
+      projectId: "godzilla-286a4",
+      storageBucket: "godzilla-286a4.appspot.com",
+      messagingSenderId: "467311590292",
+      appId: "1:467311590292:web:9c6a37f585357de8db6d81"
+    };
+
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+
+    // Function to load existing updates
+    function loadUpdates() {
+      db.collection("newsUpdates").get().then(snapshot => {
+        snapshot.forEach(doc => {
+          const data = doc.data();
+
+          // Populate form fields with existing data
+          if (data.type === "main") {
+            document.getElementById("mainImage").value = data.imageUrl;
+            document.getElementById("mainText").value = data.text;
+          }
+          if (data.type === "news1") {
+            document.getElementById("news1Image").value = data.imageUrl;
+            document.getElementById("news1Text").value = data.text;
+          }
+          if (data.type === "news2") {
+            document.getElementById("news2Image").value = data.imageUrl;
+            document.getElementById("news2Text").value = data.text;
+          }
+          if (data.type === "news3") {
+            document.getElementById("news3Image").value = data.imageUrl;
+            document.getElementById("news3Text").value = data.text;
+          }
+          if (data.type === "news4") {
+            document.getElementById("news4Image").value = data.imageUrl;
+            document.getElementById("news4Text").value = data.text;
+          }
+          if (data.type === "news5") {
+            document.getElementById("news5Image").value = data.imageUrl;
+            document.getElementById("news5Text").value = data.text;
+          }
+          if (data.type === "news6") {
+            document.getElementById("news6Image").value = data.imageUrl;
+            document.getElementById("news6Text").value = data.text;
+          }
+        });
+      });
+    }
+
+    // Function to save updates to Firestore
+    function saveUpdates() {
+      const updates = [
+        { id: "main", imageUrl: document.getElementById("mainImage").value, text: document.getElementById("mainText").value },
+        { id: "news1", imageUrl: document.getElementById("news1Image").value, text: document.getElementById("news1Text").value },
+        { id: "news2", imageUrl: document.getElementById("news2Image").value, text: document.getElementById("news2Text").value },
+        { id: "news3", imageUrl: document.getElementById("news3Image").value, text: document.getElementById("news3Text").value },
+        { id: "news4", imageUrl: document.getElementById("news4Image").value, text: document.getElementById("news4Text").value },
+        { id: "news5", imageUrl: document.getElementById("news5Image").value, text: document.getElementById("news5Text").value },
+        { id: "news6", imageUrl: document.getElementById("news6Image").value, text: document.getElementById("news6Text").value },
+      ];
+
+      updates.forEach(update => {
+        db.collection("newsUpdates").doc(update.id).set({
+          imageUrl: update.imageUrl,
+          text: update.text,
+          type: update.id
+        }).then(() => {
+          alert(`${update.id} updated successfully!`);
+        }).catch(error => {
+          console.error("Error updating document: ", error);
+          alert("There was an error updating the content.");
+        });
+      });
+    }
+
+    // Load the existing data when the page loads
+    loadUpdates();
+  </script>
+</body>
+</html>
